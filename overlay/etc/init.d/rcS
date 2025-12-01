@@ -1,0 +1,22 @@
+#!/bin/sh
+
+/bin/mount -t proc none /proc
+
+/bin/mount -t sysfs none /sys
+
+/sbin/mdev -s
+
+/bin/hostname Dsystem-busybox-linux
+
+echo -e "           ---   Welcome to Dsystem!   ---"
+echo -e "           RootFS Initialization Complete!"
+
+if [ -c /dev/ttyS0 ]; then
+    TTY_DEV=/dev/ttyS0
+elif [ -c /dev/console ]; then
+    TTY_DEV=/dev/console
+else
+    exec /bin/ash
+fi
+
+exec /bin/ash < ${TTY_DEV} > ${TTY_DEV} 2>&1

@@ -1,5 +1,11 @@
 .vscode
 .ccache
 
+# dirs
 linux
 qemu
+busybox
+rootfs
+
+# files
+rootfs_image

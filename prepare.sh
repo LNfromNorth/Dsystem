@@ -15,6 +15,7 @@ error()     { echo -e "${RED}[ERR]${RESET}  $1"; }
 
 QEMU_URL="https://download.qemu.org/qemu-7.2.21.tar.bz2"
 LINUX_URL="https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.196.tar.xz"
+BUSYBOX_URL="https://busybox.net/downloads/busybox-1.36.1.tar.bz2"
 
 download_and_extract() {
   local url="$1"
@@ -24,7 +25,10 @@ download_and_extract() {
   # download
   info ">>> Downloading $url ..."
   if [ -f "$fname" ]; then
-    warn "  File $fname already exists — skip download."
+    warn "File $fname already exists — skip downmload."
+  elif [ -d "$prefix" ]; then
+    warn "Dir $prefix already exits - skip task."
+    return 0
   else
     wget "$url"
   fi
@@ -69,6 +73,7 @@ download_and_extract() {
 
 download_and_extract "$QEMU_URL" "qemu"
 download_and_extract "$LINUX_URL" "linux"
+download_and_extract "$BUSYBOX_URL" "busybox"
 
 success "All done."
 
